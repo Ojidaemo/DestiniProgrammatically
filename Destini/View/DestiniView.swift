@@ -7,9 +7,25 @@
 
 import UIKit
 
-class DestiniView: UIView {
+@objc protocol choiceButtonProtocol: AnyObject {
+    func didPressChoise()
+}
 
-    let screen = ViewController()
+class DestiniView: UIView {
+    
+    weak var delegateChoiseButton: choiceButtonProtocol?
+    var storyBrain = StoryBrain()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        addingToStack()
+        setUI()
+        setConstraints()
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     lazy var stackView: UIStackView = {
          let stack = UIStackView()
@@ -25,12 +41,12 @@ class DestiniView: UIView {
     lazy var backgroundView: UIImageView = {
          
          let background = UIImageView()
-         background.image = #imageLiteral(resourceName: "background")
-        background.frame = screen.view.frame
-         background.contentMode = .scaleAspectFill
-         background.translatesAutoresizingMaskIntoConstraints = false
+        background.image = #imageLiteral(resourceName: "background")
+        background.frame = self.frame
+        background.contentMode = .scaleAspectFill
+        background.translatesAutoresizingMaskIntoConstraints = false
          
-         return background
+        return background
      }()
      
      lazy var storyLabel: UILabel = {
@@ -56,7 +72,7 @@ class DestiniView: UIView {
          choice1.setTitleColor(.white, for: .normal)
          choice1.titleLabel?.font = .systemFont(ofSize: 23)
          choice1.layer.cornerRadius = 10
-         choice1.addTarget(self, action: #selector(screen.choiceMade), for: .touchUpInside)
+         choice1.addTarget(self, action: #selector(choiceMade(_:)), for: .touchUpInside)
          choice1.translatesAutoresizingMaskIntoConstraints = false
          return choice1
          
@@ -70,11 +86,15 @@ class DestiniView: UIView {
          choice2.setTitleColor(.white, for: .normal)
          choice2.titleLabel?.font = .systemFont(ofSize: 23)
          choice2.layer.cornerRadius = 10
-         choice2.addTarget(self, action: #selector(screen.choiceMade), for: .touchUpInside)
+         choice2.addTarget(self, action: #selector(choiceMade(_:)), for: .touchUpInside)
          choice2.translatesAutoresizingMaskIntoConstraints = false
          return choice2
          
      }()
+    
+    @objc func choiceMade(_ sender: UIButton) {
+        delegateChoiseButton?.didPressChoise()
+    }
     
     func addingToStack() {
         stackView.addArrangedSubview(storyLabel)
@@ -83,17 +103,17 @@ class DestiniView: UIView {
     }
 
     func setUI() {
-        screen.view.addSubview(backgroundView)
-        screen.view.addSubview(stackView)
+        addSubview(backgroundView)
+        addSubview(stackView)
     }
 
     func setConstraints() {
         NSLayoutConstraint.activate([
 
-            stackView.topAnchor.constraint(equalTo: screen.view.safeAreaLayoutGuide.topAnchor),
-            stackView.bottomAnchor.constraint(equalTo: screen.view.safeAreaLayoutGuide.bottomAnchor),
-            stackView.leadingAnchor.constraint(equalTo: screen.view.layoutMarginsGuide.leadingAnchor),
-            stackView.trailingAnchor.constraint(equalTo: screen.view.layoutMarginsGuide.trailingAnchor),
+            stackView.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor),
+            stackView.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor),
+            stackView.leadingAnchor.constraint(equalTo: layoutMarginsGuide.leadingAnchor),
+            stackView.trailingAnchor.constraint(equalTo: layoutMarginsGuide.trailingAnchor),
 
             choice1Button.heightAnchor.constraint(equalToConstant: 100),
             choice2Button.heightAnchor.constraint(equalToConstant: 100)

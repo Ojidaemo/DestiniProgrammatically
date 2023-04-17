@@ -93,9 +93,9 @@
 		87616ED02986B34F0043E4C4 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				87616ED92987E7FD0043E4C4 /* DestiniView.swift */,
 				87616EC0298697D80043E4C4 /* Main.storyboard */,
 				87616EC5298697D90043E4C4 /* LaunchScreen.storyboard */,
-				87616ED92987E7FD0043E4C4 /* DestiniView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
