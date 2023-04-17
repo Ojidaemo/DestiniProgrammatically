@@ -22,7 +22,7 @@ class ViewController: UIViewController {
         updateUI()
         
     }
-    
+        
     //MARK: - Methods for navigation through the story
     
     func updateUI() {
@@ -47,7 +47,7 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: choiceButtonProtocol {
-    func didPressChoise() {
+    func didPressChoise(sender: UIButton) {
         storyBrain.nextStory(userChoice: sender.currentTitle!)
         updateUI()
     }

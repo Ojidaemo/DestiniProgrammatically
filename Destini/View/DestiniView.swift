@@ -8,7 +8,7 @@
 import UIKit
 
 @objc protocol choiceButtonProtocol: AnyObject {
-    func didPressChoise()
+    func didPressChoise(sender: UIButton)
 }
 
 class DestiniView: UIView {
@@ -93,7 +93,7 @@ class DestiniView: UIView {
      }()
     
     @objc func choiceMade(_ sender: UIButton) {
-        delegateChoiseButton?.didPressChoise()
+        delegateChoiseButton?.didPressChoise(sender: sender)
     }
     
     func addingToStack() {
