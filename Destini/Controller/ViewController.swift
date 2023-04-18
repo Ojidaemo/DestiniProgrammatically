@@ -7,22 +7,20 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+final class ViewController: UIViewController {
     
     var storyBrain = StoryBrain()
     let destiniView = DestiniView()
     
+    //MARK: - LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
-                
         destiniView.delegateChoiseButton = self
-        
-        view.addSubview(destiniView)
+        setLayout()
         setupConstraints()
         updateUI()
-        
     }
-        
+    
     //MARK: - Methods for navigation through the story
     
     func updateUI() {
@@ -33,13 +31,16 @@ class ViewController: UIViewController {
     
     //MARK: - Methods for setting UI
     
-    private func setupConstraints() {
-        
+    private func setLayout() {
         destiniView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(destiniView)
+    }
+    
+    private func setupConstraints() {
         
         NSLayoutConstraint.activate([
             destiniView.topAnchor.constraint(equalTo: view.topAnchor),
-            destiniView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            destiniView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             destiniView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             destiniView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
         ])

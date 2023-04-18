@@ -65,5 +65,4 @@ struct StoryBrain {
     func getChoice2() -> String {
         return stories[storyNumber].choice2
     }
-    
 }
